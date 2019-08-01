@@ -1,0 +1,48 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.DirectoryServices;
+
+namespace OutlookSignature
+{
+    class ActiveDirectoryFunctions
+    {
+        public string GetPropertyValue(SearchResult searchResult, string PropertyName)
+        {
+            if (searchResult.Properties.Contains(PropertyName))
+            {
+                return searchResult.Properties[PropertyName][0].ToString();
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        public Dictionary<string, string> LoadUserProperties(string username)
+        {
+            DirectoryEntry entry = new DirectoryEntry("LDAP://rb-al");
+            //entry.Username = "printing.bguard";
+            //entry.Password = "bguard123";
+
+            DirectorySearcher adSearch = new DirectorySearcher(entry);
+            adSearch.Filter = $"(sAMAccountName={username})";
+            string[] propertiesToLoad = { "Tel ", "Job position", "Department", "Mobile" };
+            foreach (string property in propertiesToLoad)
+            {
+                adSearch.PropertiesToLoad.Add(property);
+            }
+
+            SearchResult adSearchResult = adSearch.FindOne();
+            Dictionary<string, string> loadedProperties = new Dictionary<string, string>();
+            foreach(string property in propertiesToLoad)
+            {
+                loadedProperties.Add(property, GetPropertyValue(adSearchResult, property));
+            }
+
+            return loadedProperties;
+        }
+
+    }
+}

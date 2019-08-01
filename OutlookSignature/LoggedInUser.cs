@@ -9,17 +9,17 @@ namespace OutlookSignature
     class LoggedInUser
     {
 
-        public string getUsername()
+        public string GetUsername()
         {
             return (string) Environment.UserName;
         }
 
-        public string getFullname()
+        public string GetFullname()
         {
             return (string) System.DirectoryServices.AccountManagement.UserPrincipal.Current.DisplayName;
         }
 
-        public string getOrganization()
+        public string GetOrganization()
         {
             return (string)"Raiffeisen Bank Albania";
         }
