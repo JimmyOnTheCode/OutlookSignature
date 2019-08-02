@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Windows.Forms;
 
 namespace OutlookSignature
 {
     class SignatureFunctions
     {
-        private readonly string sourcePath = "\\\\rbal-store\\temp\\Jimmy\\RBAL Signature";
+        //private readonly string sourcePath = "\\\\rbal-store\\temp\\Jimmy\\RBAL Signature";
+        private readonly string sourcePath = @"\\10.233.17.17\e\RBAL Signature Template";
         public string destinationPath;
         private readonly string[] filesInScope = { "RBAL Signature.txt", "RBAL Signature.htm" };
         private string[] filePaths;    
@@ -17,18 +19,24 @@ namespace OutlookSignature
         {
             destinationPath = @"C:\Users\" + username + @"\AppData\Roaming\Microsoft\Signatures";
 
-            //Create all of the directories
-            foreach(string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
+            try
             {
-                Directory.CreateDirectory(dirPath.Replace(sourcePath, destinationPath));
-            }   
+                //Create all of the directories
+                foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
+                {
+                    Directory.CreateDirectory(dirPath.Replace(sourcePath, destinationPath));
+                }
 
-            //Copy all the files & Replaces any files with the same name
-            foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
+                //Copy all the files & Replaces any files with the same name
+                foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
+                {
+                    File.Copy(newPath, newPath.Replace(sourcePath, destinationPath), true);
+                }
+            }catch(Exception exc)
             {
-                File.Copy(newPath, newPath.Replace(sourcePath, destinationPath), true);
+                MessageBox.Show("Could not find Template!\n" + exc.Message);
+                Application.Exit();
             }
-
         }
 
         public void GetCopiedFiles()
@@ -36,7 +44,7 @@ namespace OutlookSignature
             filePaths = Directory.GetFiles(destinationPath, "*", SearchOption.AllDirectories);
         }
 
-        public void UpdateCopiedFiles(string fullname, string unit, string department, string division, string address, string tel)
+        public void UpdateCopiedFiles(string fullname, string jobPosition, string department, string address, string tel, string mobile)
         {
             Dictionary<string, string> varsToReplace = new Dictionary<string, string>();
             
@@ -46,11 +54,11 @@ namespace OutlookSignature
 
             varsToReplace.Add("varName", name);
             varsToReplace.Add("varSurname", surname);
-            varsToReplace.Add("varUnit", unit);
+            varsToReplace.Add("varJobPosition", jobPosition);
             varsToReplace.Add("varDepartment", department);
-            varsToReplace.Add("varDivision", division);
             varsToReplace.Add("varAddress", address);
             varsToReplace.Add("varTel", tel);
+            varsToReplace.Add("varMobile", mobile);
 
             foreach (string filePath in filePaths)
             {

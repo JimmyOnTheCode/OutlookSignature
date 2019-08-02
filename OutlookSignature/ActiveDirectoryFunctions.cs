@@ -28,7 +28,7 @@ namespace OutlookSignature
 
             DirectorySearcher adSearch = new DirectorySearcher(entry);
             adSearch.Filter = $"(sAMAccountName={username})";
-            string[] propertiesToLoad = { "Tel ", "Job position", "Department", "Mobile" };
+            string[] propertiesToLoad = { "telephoneNumber", "department", "mobile", "title", "streetAddress", "company" };
             foreach (string property in propertiesToLoad)
             {
                 adSearch.PropertiesToLoad.Add(property);
