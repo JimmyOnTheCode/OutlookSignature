@@ -37,42 +37,21 @@ namespace OutlookSignature
 
         private bool ValidateInputs()
         {
-            bool condition = false;
-            int countFilled = 0;
-            
-            if(this.TextboxJobPosition.Text != "")
-            {
-                countFilled++;
-            }
+            string[] mandatoryTextboxes = { "TextboxJobPosition", "TextboxDepartment", "TextboxAddress", "TextboxTelephone" };
+            bool condition = true;
 
-            if (this.TextboxDepartment.Text != "")
+            foreach(Control controlElement in this.Controls)
             {
-                countFilled++;
-            }
-
-            if (this.TextboxAddress.Text != "")
-            {
-                countFilled++;
-            }
-
-            if (this.TextboxMobile.Text != "")
-            {
-                countFilled++;
-            }
-
-            if (this.TextboxMobile.Text != "")
-            {
-                countFilled++;
-            }
-
-            if (this.TextboxMobile.Text != "")
-            {
-                countFilled++;
-            }
-
-            if (countFilled >= 2)
-            {
-                condition = true;
+                if (controlElement is TextBox)
+                {
+                    if (controlElement.Text == "")
+                    {
+                        if (mandatoryTextboxes.Contains(controlElement.Name))
+                        {
+                            condition = false;
+                        }
+                    }
+                }
             }
 
             return condition;
@@ -82,7 +61,7 @@ namespace OutlookSignature
         {
             if (!ValidateInputs())
             {
-                MessageBox.Show("Please fill at least 2/3 fields above!");
+                MessageBox.Show("Please fill all mandatory fields: \n\u2022 Job Position\n\u2022 Branch/Dept.\n\u2022 Address\n\u2022 Telephone ");
             }
             else
             {
