@@ -8,7 +8,6 @@ namespace OutlookSignature
 {
     class LoggedInUser
     {
-
         public string GetUsername()
         {
             return (string) Environment.UserName;
@@ -17,11 +16,6 @@ namespace OutlookSignature
         public string GetFullname()
         {
             return (string) System.DirectoryServices.AccountManagement.UserPrincipal.Current.DisplayName;
-        }
-
-        public string GetOrganization()
-        {
-            return (string)"Raiffeisen Bank Albania";
         }
 
     }

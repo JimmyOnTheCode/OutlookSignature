@@ -18,12 +18,11 @@ namespace OutlookSignature
             ButtonGenerate.Select();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
             LoggedInUser loggedInUser = new LoggedInUser();
-            this.LabelFullnameData.Text = loggedInUser.GetFullname(); ;
+            this.LabelFullnameData.Text = loggedInUser.GetFullname();
             this.LabelUsernameData.Text = loggedInUser.GetUsername();
-            
 
             ActiveDirectoryFunctions activeDirectoryFunctions = new ActiveDirectoryFunctions();
             Dictionary<string, string> userData = activeDirectoryFunctions.LoadUserProperties(this.LabelUsernameData.Text);
@@ -53,7 +52,6 @@ namespace OutlookSignature
                     }
                 }
             }
-
             return condition;
         }
 
@@ -68,7 +66,6 @@ namespace OutlookSignature
                 try
                 {
                     SignatureFunctions signatureFunctions = new SignatureFunctions();
-                    
                     signatureFunctions.CopyFiles(this.LabelUsernameData.Text);
                     signatureFunctions.GetCopiedFiles();
                     signatureFunctions.UpdateCopiedFiles(
@@ -89,6 +86,5 @@ namespace OutlookSignature
                 }
             }
         }
-
     }
 }

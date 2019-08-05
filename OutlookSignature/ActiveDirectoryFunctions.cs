@@ -23,12 +23,10 @@ namespace OutlookSignature
         public Dictionary<string, string> LoadUserProperties(string username)
         {
             DirectoryEntry entry = new DirectoryEntry("LDAP://rb-al");
-            //entry.Username = "printing.bguard";
-            //entry.Password = "bguard123";
-
             DirectorySearcher adSearch = new DirectorySearcher(entry);
             adSearch.Filter = $"(sAMAccountName={username})";
             string[] propertiesToLoad = { "telephoneNumber", "department", "mobile", "title", "streetAddress", "company" };
+
             foreach (string property in propertiesToLoad)
             {
                 adSearch.PropertiesToLoad.Add(property);
@@ -36,11 +34,11 @@ namespace OutlookSignature
 
             SearchResult adSearchResult = adSearch.FindOne();
             Dictionary<string, string> loadedProperties = new Dictionary<string, string>();
-            foreach(string property in propertiesToLoad)
+
+            foreach (string property in propertiesToLoad)
             {
                 loadedProperties.Add(property, GetPropertyValue(adSearchResult, property));
             }
-
             return loadedProperties;
         }
 

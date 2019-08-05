@@ -9,7 +9,6 @@ namespace OutlookSignature
 {
     class SignatureFunctions
     {
-        //private readonly string sourcePath = "\\\\rbal-store\\temp\\Jimmy\\RBAL Signature";
         private readonly string sourcePath = @"\\10.233.17.17\e\RBAL Signature Template";
         public string destinationPath;
         private readonly string[] filesInScope = { "RBAL Signature.txt", "RBAL Signature.htm" };
@@ -78,26 +77,5 @@ namespace OutlookSignature
             }
         }
 
-        /*
-        public List<String> GetFilesHelper(string dir)
-        {
-            List<String> files = new List<String>();
-            try
-            {
-                foreach(string f in Directory.GetFiles(dir))
-                {
-                    files.Add(f);
-                }
-                foreach(string d in Directory.GetDirectories(dir))
-                {
-                    files.AddRange(GetFilesHelper(d));
-                }
-            }catch(System.Exception exc){
-                Console.WriteLine(exc);
-            }
-
-            return files;
-        }
-        */
     }
 }
