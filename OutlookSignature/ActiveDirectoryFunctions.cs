@@ -25,7 +25,7 @@ namespace OutlookSignature
             DirectoryEntry entry = new DirectoryEntry("LDAP://rb-al");
             DirectorySearcher adSearch = new DirectorySearcher(entry);
             adSearch.Filter = $"(sAMAccountName={username})";
-            string[] propertiesToLoad = { "telephoneNumber", "department", "mobile", "title", "streetAddress", "company" };
+            string[] propertiesToLoad = { "telephoneNumber", "department", "departmentNumber", "mobile", "title", "streetAddress", "company" };
 
             foreach (string property in propertiesToLoad)
             {

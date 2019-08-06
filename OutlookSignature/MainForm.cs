@@ -28,6 +28,11 @@ namespace OutlookSignature
             Dictionary<string, string> userData = activeDirectoryFunctions.LoadUserProperties(this.LabelUsernameData.Text);
             this.TextboxJobPosition.Text = userData["title"];
             this.TextboxDepartment.Text = userData["department"];
+            if (userData["departmentNumber"] != "")
+            {
+                this.TextboxDepartment.Text = userData["department"] + ", " + userData["departmentNumber"];
+            }
+            
             this.TextboxAddress.Text = userData["streetAddress"];
             this.TextboxTelephone.Text = userData["telephoneNumber"];
             this.TextboxMobile.Text = userData["mobile"];
@@ -36,7 +41,7 @@ namespace OutlookSignature
 
         private bool ValidateInputs()
         {
-            string[] mandatoryTextboxes = { "TextboxJobPosition", "TextboxDepartment", "TextboxAddress", "TextboxTelephone" };
+            string[] mandatoryTextboxes = { "TextboxJobPosition","TextboxDepartment", "TextboxAddress", "TextboxTelephone" };
             bool condition = true;
 
             foreach(Control controlElement in this.Controls)
@@ -56,8 +61,9 @@ namespace OutlookSignature
         }
 
         private void ButtonGenerate_Click(object sender, EventArgs e)
-        {
-            if (!ValidateInputs())
+        {   
+            //validate inputs, skip if certain user logged in...
+            if (!ValidateInputs() && this.LabelUsernameData.Text != "alacach")
             {
                 MessageBox.Show("Please fill all mandatory fields: \n\u2022 Job Position\n\u2022 Branch/Dept.\n\u2022 Address\n\u2022 Telephone ");
             }

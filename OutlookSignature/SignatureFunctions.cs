@@ -46,7 +46,7 @@ namespace OutlookSignature
         public void UpdateCopiedFiles(string fullname, string jobPosition, string department, string address, string tel, string mobile)
         {
             Dictionary<string, string> varsToReplace = new Dictionary<string, string>();
-            
+
             //split AD Display Name - to handle name and surname separately also for email
             string name = fullname.Split(' ')[0]; ;
             string surname = fullname.Split(' ')[1];
@@ -56,9 +56,18 @@ namespace OutlookSignature
             varsToReplace.Add("varJobPosition", jobPosition);
             varsToReplace.Add("varDepartment", department);
             varsToReplace.Add("varAddress", address);
-            varsToReplace.Add("varTel", tel);
-            varsToReplace.Add("varMobile", mobile);
 
+            //Only affect template if not empty
+            if (tel != "")
+            {
+                varsToReplace.Add("varTel", tel);
+            }
+
+            if (mobile != "")
+            {
+                varsToReplace.Add("varMobile", mobile);
+            }
+            
             foreach (string filePath in filePaths)
             {
                 if (filesInScope.Contains(Path.GetFileName(filePath)))
@@ -69,9 +78,21 @@ namespace OutlookSignature
                     {
                         if (fileText.Contains(item.Key))
                         {
-                            fileText = fileText.Replace(item.Key, item.Value);    
+                            fileText = fileText.Replace(item.Key, item.Value);
                         }
                     }
+
+                    //if tel and mobile are empty, remove the entire signature line
+                    if (tel == "")
+                    {
+                        fileText = fileText.Replace("Tel: varTel | ", "");
+                    }
+
+                    if (mobile == "")
+                    {
+                        fileText = fileText.Replace("Mob: varMobile", "");
+                    }
+                    
                     File.WriteAllText(filePath, fileText);
                 }
             }
