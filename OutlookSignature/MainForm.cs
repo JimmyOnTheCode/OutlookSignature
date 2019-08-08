@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace OutlookSignature
 {
@@ -27,16 +28,16 @@ namespace OutlookSignature
             ActiveDirectoryFunctions activeDirectoryFunctions = new ActiveDirectoryFunctions();
             Dictionary<string, string> userData = activeDirectoryFunctions.LoadUserProperties(this.LabelUsernameData.Text);
             this.TextboxJobPosition.Text = userData["title"];
-            this.TextboxDepartment.Text = userData["department"];
-            if (userData["departmentNumber"] != "")
-            {
-                this.TextboxDepartment.Text = userData["department"] + ", " + userData["departmentNumber"];
-            }
-            
+            this.TextboxDepartment.Text = userData["department"]; 
             this.TextboxAddress.Text = userData["streetAddress"];
             this.TextboxTelephone.Text = userData["telephoneNumber"];
             this.TextboxMobile.Text = userData["mobile"];
             this.LabelOrgData.Text = userData["company"];
+            if (userData["departmentNumber"] != "")
+            {
+                this.TextboxDepartment.Text = userData["department"] + ", " + userData["departmentNumber"];
+            }
+ 
         }
 
         private bool ValidateInputs()
@@ -58,6 +59,24 @@ namespace OutlookSignature
                 }
             }
             return condition;
+        }
+        
+        private void UpdateRegistry(string value)
+        {
+            try
+            {
+                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Office\16.0\Outlook\Profiles\Outlook\9375CFF0413111d3B88A00104B2A6676\00000002", true))
+                {
+                    if(key != null)
+                    {
+                        key.SetValue("New Signature", value);
+                        key.SetValue("Reply-Forward Signature", value);
+                    }
+                }
+            }catch(Exception exc)
+            {
+                return;
+            }
         }
 
         private void ButtonGenerate_Click(object sender, EventArgs e)
@@ -83,6 +102,7 @@ namespace OutlookSignature
                         this.TextboxMobile.Text
                     );
                     ButtonGenerate.Enabled = false;
+                    UpdateRegistry("RBAL Signature");
                     MessageBox.Show("Success!\nYou can now select the new signature from Outlook.");
                     Application.Exit();
                 }
