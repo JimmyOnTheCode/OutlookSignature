@@ -103,7 +103,7 @@ namespace OutlookSignature
                     );
                     ButtonGenerate.Enabled = false;
                     UpdateRegistry("RBAL Signature");
-                    MessageBox.Show("Success!\nYou can now select the new signature from Outlook.");
+                    MessageBox.Show("Success!\nSimply restart Outlook and enjoy your new signature.");
                     Application.Exit();
                 }
                 catch(Exception exc)
