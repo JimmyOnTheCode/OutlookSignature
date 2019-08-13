@@ -116,6 +116,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
     <None Include="OutlookSignature_1_TemporaryKey.pfx" />
@@ -145,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="outlook icon.ico" />
+    <None Include="Resources\help icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
