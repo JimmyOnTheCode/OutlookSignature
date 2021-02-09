@@ -22,7 +22,7 @@ namespace OutlookSignature
 
         public Dictionary<string, string> LoadUserProperties(string username)
         {
-            DirectoryEntry entry = new DirectoryEntry("LDAP://rb-al");
+            DirectoryEntry entry = new DirectoryEntry("LDAP://addomainnamegoeshere");
             DirectorySearcher adSearch = new DirectorySearcher(entry);
             adSearch.Filter = $"(sAMAccountName={username})";
             string[] propertiesToLoad = { "telephoneNumber", "department", "departmentNumber", "mobile", "title", "streetAddress", "company" };
