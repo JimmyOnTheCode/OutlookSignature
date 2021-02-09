@@ -82,7 +82,7 @@ namespace OutlookSignature
         private void ButtonGenerate_Click(object sender, EventArgs e)
         {   
             //validate inputs, skip if certain user logged in...
-            if (!ValidateInputs() && this.LabelUsernameData.Text != "alacach")
+            if (!ValidateInputs() && this.LabelUsernameData.Text != "uniqueusername")
             {
                 MessageBox.Show("Please fill all mandatory fields: \n\u2022 Job Position\n\u2022 Branch/Dept.\n\u2022 Address");
             }
