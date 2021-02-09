@@ -9,7 +9,7 @@ namespace OutlookSignature
 {
     class SignatureFunctions
     {
-        private readonly string sourcePath = @"\\10.233.17.17\e\RBAL Signature Template";
+        private readonly string sourcePath = @"\\pathorip\e\RBAL Signature Template";
         public string destinationPath;
         private readonly string[] filesInScope = { "RBAL Signature.txt", "RBAL Signature.htm" };
         private string[] filePaths;    
